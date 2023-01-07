@@ -37,6 +37,12 @@ exports.createSupplier = async (req,res) => {
         message
       });
 
+      const duplicateBrand = await Supplier.findOne({brandName});
+      if(duplicateBrand)
+      {
+        return res.status(200).json({message:"Brand already exists",success:false});
+      }
+
     await newSupplier
     .save()
     .then(() => {
