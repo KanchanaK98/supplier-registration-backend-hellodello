@@ -5,6 +5,7 @@ dotenv.config();
 const URL = process.env.MONGODB_URL;
 
 const dbConnection = () => {
+    mongoose.set("strictQuery", false);
     mongoose.connect(URL, {
         useNewUrlParser: true,
         useUnifiedTopology: true
@@ -18,4 +19,4 @@ const dbConnection = () => {
     })
 };
 
-module.exports = dbConnection;
+module.exports = dbConnection; 
