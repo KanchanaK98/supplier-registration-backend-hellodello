@@ -1,49 +1,51 @@
 let Supplier = require("../models/SupplierDetails");
 
-exports.createSupplier = async (req,res) => {
-    const { 
-        brandName,
-        establishmentYear,
-        productCategory,
-        websiteLink,
-        portfolioSize,
-        approximateRevenue,
-        linksOfTopSellingProducts,
+exports.createSupplier = async (req, res) => {
+  console.log("save");
+  console.log(req.body);
+  const {
+    brandName,
+    establishmentYear,
+    productCategory,
+    websiteLink,
+    portfolioSize,
+    approximateRevenue,
+    linksOfTopSellingProducts,
         physicalShops,
-        physicalLocations,
-        brandPresentation,
-        imagesOfStore,
-        contactPerson,
-        email,
-        contactNumber,
+    physicalLocations,
+    brandPresentation,
+    imagesOfStore,
+    contactPerson,
+    email,
+    contactNumber,
         message
-      } = req.body;
+  } = req.body;
 
-      const newSupplier = new Supplier({
-        brandName,
-        establishmentYear,
-        productCategory,
-        websiteLink,
-        portfolioSize,
-        approximateRevenue,
-        linksOfTopSellingProducts,
+  const newSupplier = new Supplier({
+    brandName,
+    establishmentYear,
+    productCategory,
+    websiteLink,
+    portfolioSize,
+    approximateRevenue,
+    linksOfTopSellingProducts,
         physicalShops,
-        physicalLocations,
-        brandPresentation,
-        imagesOfStore,
-        contactPerson,
-        email,
-        contactNumber,
+    physicalLocations,
+    brandPresentation,
+    imagesOfStore,
+    contactPerson,
+    email,
+    contactNumber,
         message
-      });
+  });
 
       const duplicateBrand = await Supplier.findOne({brandName});
       if(duplicateBrand)
       {
         return res.status(200).json({message:"Brand already exists",success:false});
-      }
+  }
 
-    await newSupplier
+  await newSupplier
     .save()
     .then(() => {
       res
@@ -57,4 +59,25 @@ exports.createSupplier = async (req,res) => {
         success: false,
       });
     });
-}
+};
+
+exports.checkEmail = async (req, res) => {
+  console.log("check email");
+  await Supplier.findOne({ email: req.params.email })
+    .then((data) => {
+      console.log(data);
+      if (data) {
+        return res
+          .status(400)
+          .json({ message: "This email is already used", success: false });
+      }
+      return res
+        .status(200)
+        .json({ message: "You are good to go", success: true });
+    })
+    .catch((error) => {
+      return res
+      .status(400)
+      .json({ message: error.message, success: false });
+    });
+};
