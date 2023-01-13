@@ -11,14 +11,13 @@ exports.createSupplier = async (req, res) => {
     portfolioSize,
     approximateRevenue,
     linksOfTopSellingProducts,
-        physicalShops,
     physicalLocations,
     brandPresentation,
     imagesOfStore,
     contactPerson,
     email,
     contactNumber,
-        message
+    message,
   } = req.body;
 
   const newSupplier = new Supplier({
@@ -29,20 +28,20 @@ exports.createSupplier = async (req, res) => {
     portfolioSize,
     approximateRevenue,
     linksOfTopSellingProducts,
-        physicalShops,
     physicalLocations,
     brandPresentation,
     imagesOfStore,
     contactPerson,
     email,
     contactNumber,
-        message
+    message,
   });
 
-      const duplicateBrand = await Supplier.findOne({brandName});
-      if(duplicateBrand)
-      {
-        return res.status(200).json({message:"Brand already exists",success:false});
+  const duplicateBrand = await Supplier.findOne({ brandName });
+  if (duplicateBrand) {
+    return res
+      .status(200)
+      .json({ message: "Brand already exists", success: false });
   }
 
   await newSupplier
@@ -76,8 +75,6 @@ exports.checkEmail = async (req, res) => {
         .json({ message: "You are good to go", success: true });
     })
     .catch((error) => {
-      return res
-      .status(400)
-      .json({ message: error.message, success: false });
+      return res.status(400).json({ message: error.message, success: false });
     });
 };

@@ -28,10 +28,6 @@ const supplierSchema = new Schema({
         type : String,
         required : true
     }],
-    physicalShops : {
-        type : Boolean,
-        required : true
-    },
     physicalLocations : [{ // array type strings seperated with commas
         type : String,
         required : false
