@@ -9,6 +9,7 @@ const dbConnection = require("./config/connectDataBase");
 
 // require routes
 const createSupplier = require("./routes/createSupplier")
+const sendEmail = require("./routes/sendEmails")
 
 app.use(cors());
 app.use(bodyParser.json({limit: '50mb'}));
@@ -24,3 +25,4 @@ app.listen(PORT, () => {
 
 // use routes
 app.use("/supplier",createSupplier);
+app.use("/email",sendEmail);
