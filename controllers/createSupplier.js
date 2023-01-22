@@ -78,3 +78,22 @@ exports.checkEmail = async (req, res) => {
       return res.status(400).json({ message: error.message, success: false });
     });
 };
+
+exports.checkBrandName = async (req, res) => {
+  console.log("check brand name");
+  await Supplier.findOne({ brandName: req.params.brandName })
+    .then((data) => {
+      console.log(data);
+      if (data) {
+        return res
+          .status(400)
+          .json({ message: "This brand name is already used", success: false });
+      }
+      return res
+        .status(200)
+        .json({ message: "You are good to go", success: true });
+    })
+    .catch((error) => {
+      return res.status(400).json({ message: error.message, success: false });
+    });
+}
